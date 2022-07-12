@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>add_bill</action_name>
+        <active>true</active>
+        <client>true</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments/>
+        <condition>current.u_billing_period!="" &amp;&amp; current.u_string_1!=""</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint/>
+        <isolate_script>true</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Add Bill Hist</name>
+        <onclick>addBillingHistory()</onclick>
+        <order>10</order>
+        <script><![CDATA[//Client-side 'onclick' function
+function addBillingHistory(){
+if(g_form.getValue('u_billing_period') == ''){
+//Remove any existing field message, set comments mandatory, and show a new field message
+g_form.hideFieldMsg('u_billing_period');
+g_form.setMandatory('u_billing_period', true);
+g_form.showFieldMsg('u_billing_period','Mandatory when reopening adding history.','error');
+
+return false; //Abort submission
+}
+
+else if(g_form.getValue('u_string_1') == ''){
+//Remove any existing field message, set comments mandatory, and show a new field message
+g_form.hideFieldMsg('u_string_1');
+g_form.setMandatory('u_string_1', true);
+g_form.showFieldMsg('u_string_1','Mandatory when reopening adding history.','error');
+return false; //Abort submission
+}
+
+else if(g_form.getValue('u_billing_period'&&'u_string_1') != ''){
+var answer = confirm("Add a History Record?");
+    if (answer == false) {
+      return false; //Abort submission
+} }
+	
+	
+//Call the UI Action and skip the 'onclick' function
+gsftSubmit(null, g_form.getFormElement(), 'add_bill'); //MUST call the 'Action name' set in this UI Action
+}
+
+//Code that runs without 'onclick'
+//Ensure call to server-side function with no browser errors
+if(typeof window == 'undefined')
+billSet();
+
+function billSet(){
+//Set the 'State' to 'Active', update and reload the record
+// New container to create new record
+var child = new GlideRecord('x_58872_needit_ces_billing_history');
+
+//Define field values from current record
+child.ces_record = current.sys_id; 
+child.billing_period = current.u_billing_period;
+child.ces_billing_price = current.u_string_1;
+child.requested_for = current.u_requested_for;
+child.insert();
+
+//clear field values from current record
+current.u_billing_period = "";
+current.u_string_1 = "";
+current.update();
+	
+gs.addInfoMessage('Billing Added');
+action.setRedirectURL(current);
+}]]></script>
+        <show_insert>true</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-11 23:20:26</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>32eb6c0787e051107a0063150cbb35a2</sys_id>
+        <sys_mod_count>20</sys_mod_count>
+        <sys_name>Add Bill Hist</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_ui_action_32eb6c0787e051107a0063150cbb35a2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-12 01:14:49</sys_updated_on>
+        <table>x_58872_needit_needit</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

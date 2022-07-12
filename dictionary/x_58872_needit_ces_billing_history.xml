@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="CES Billing History" max_length="40" name="x_58872_needit_ces_billing_history" sizeclass="43" type="collection">
+        <element label="Billing Period" max_length="40" name="billing_period" type="string"/>
+        <element label="CES Billing Price" max_length="40" name="ces_billing_price" type="string"/>
+        <element label="CES Record" max_length="32" name="ces_record" reference="x_58872_needit_needit" type="reference"/>
+        <element label="Requested For" max_length="40" name="requested_for" reference="sys_user" type="reference"/>
+        <index name="index">
+            <element name="ces_record"/>
+        </index>
+    </element>
+</database>
